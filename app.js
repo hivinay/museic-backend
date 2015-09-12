@@ -1,5 +1,4 @@
 var express = require('express');
-var Songza = require('songza');
 var SpotifyWebApi = require('spotify-web-api-node');
 
 var code = process.env.SPOTIFY_ACCESS_CODE;
@@ -7,7 +6,6 @@ var access_token = process.env.SPOTIFY_ACCESS_TOKEN;
 var refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
 var app = express();
-var songza = new Songza({ userAgent: 'museic/v0.0.1' });
 var spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
