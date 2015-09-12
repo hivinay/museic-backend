@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
+    "body-parser": "^1.13.3",
     "express": "^4.13.3",
+    "promise": "^7.0.4",
     "spotify-web-api-node": "^2.1.0"
   },
   "devDependencies": {},
