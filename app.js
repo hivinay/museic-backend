@@ -104,7 +104,7 @@ songza.station.get(1736950).then(function(val) {
 });
 */
 
-var server = app.listen(3000, function() {
-    var port = server.address().port;
+var port = process.env.PORT || 3000;
+var server = app.listen(port, function() {
     console.log('Listening on port %s.', port);
 });
