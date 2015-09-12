@@ -61,9 +61,10 @@ function getSongByMood(mood) {
 }
 
 app.get('/song', function(req, res) {
-    // SET HEADER AUTH STUFF
-    spotifyApi.setAccessToken(process.env.SPOTIFY_ACCESS_TOKEN);
-    spotifyApi.setRefreshToken(process.env.SPOTIFY_REFRESH_TOKEN);
+    spotifyApi.setAccessToken(req.headers['x-access-token']);
+    spotifyApi.setRefreshToken(req.headers['x-refresh-token']);
+    console.log('Access Token: %s \t Refresh Token: %s', req.headers['x-access-token'], req.headers['x-refresh-token']);
+
     Promise.all([
         getSongByMood('neutral'),
         getSongByMood('excited'),
