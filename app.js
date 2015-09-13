@@ -70,7 +70,7 @@ app.get('/song', function(req, res) {
     Promise.all([
         getSongByMood('afternoon'),
         getSongByMood('pumped'),
-        getSongByMood('calm')
+        getSongByMood('relaxed')
     ]).then(function (tracks) {
         console.log(tracks[0], tracks[1], tracks[2]);
         var neutralTrack = tracks[0];
