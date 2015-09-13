@@ -48,7 +48,9 @@ function getSongByMood(mood) {
             console.log('Mood: %s \t Playlist User: %s \t Playlist ID: %s', mood, playlist.owner.id, playlist.id);
             return spotifyApi.getPlaylistTracks(playlist.owner.id, playlist.id)
                 .then(function(res) {
-                    var allTracks = res.body.items;
+                    var allTracks = res.body.items.filter(function(track) {
+                        return track.track.preview_url;
+                    });
                     var track = allTracks[Math.floor(Math.random() * allTracks.length)]; // Choose a random track
                     console.log('Mood: %s \t Track: %s', mood, track.track.preview_url);
                     return track.track.preview_url;
@@ -70,7 +72,7 @@ app.get('/song', function(req, res) {
     Promise.all([
         getSongByMood('afternoon'),
         getSongByMood('pumped'),
-        getSongByMood('relaxed')
+        getSongByMood('calm')
     ]).then(function (tracks) {
         console.log(tracks[0], tracks[1], tracks[2]);
         var neutralTrack = tracks[0];
