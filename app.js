@@ -41,7 +41,9 @@ app.post('/auth', function(req, res) {
 function getSongByMood(mood) {
     return spotifyApi.searchPlaylists(mood)
         .then(function(res) {
-            var allPlaylists = res.body.playlists.items;
+            var allPlaylists = res.body.playlists.items.filter(function(playlist) {
+                return (playlist.owner.id.indexOf('spotify') === 0); // Playlist creator is spotify*
+            });
             var playlist = allPlaylists[Math.floor(Math.random() * allPlaylists.length)]; // Choose a random playlist
             console.log('Mood: %s \t Playlist User: %s \t Playlist ID: %s', mood, playlist.owner.id, playlist.id);
             return spotifyApi.getPlaylistTracks(playlist.owner.id, playlist.id)
@@ -66,9 +68,9 @@ app.get('/song', function(req, res) {
     console.log('Access Token: %s \t Refresh Token: %s', req.headers['x-access-token'], req.headers['x-refresh-token']);
 
     Promise.all([
-        getSongByMood('neutral'),
-        getSongByMood('excited'),
-        getSongByMood('relaxed')
+        getSongByMood('afternoon'),
+        getSongByMood('pumped'),
+        getSongByMood('calm')
     ]).then(function (tracks) {
         console.log(tracks[0], tracks[1], tracks[2]);
         var neutralTrack = tracks[0];
@@ -98,12 +100,6 @@ app.get('/song', function(req, res) {
     }).catch(console.error.bind(console));
 
 });
-
-/*
-songza.station.get(1736950).then(function(val) {
-  console.log(val);
-});
-*/
 
 var port = process.env.PORT || 3000;
 var server = app.listen(port, function() {
